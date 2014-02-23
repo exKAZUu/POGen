@@ -14,12 +14,12 @@
  
   <name>PageObjectGenerator</name>
   <description>PageObjectGenerator is a testing tool to generate skeleton test code designed by the PageObject pattern for WebDriver from html template files.</description>
-  <url>http://code.google.com/p/pageobjectgenerator/</url>
+  <url>https://github.com/exKAZUu/POGen</url>
   <inceptionYear>2011</inceptionYear>
 
   <issueManagement>
     <system>code.google.com</system>
-    <url>http://code.google.com/p/pageobjectgenerator/issues</url>
+    <url>https://github.com/exKAZUu/POGen/issues</url>
   </issueManagement>
   <licenses>
     <license>
@@ -29,9 +29,9 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm:git:http://code.google.com/p/pageobjectgenerator/</connection>
-    <developerConnection>scm:git:http://code.google.com/p/pageobjectgenerator/</developerConnection>
-    <url>http://code.google.com/p/pageobjectgenerator/source/browse</url>
+    <connection>scm:git:https://github.com/exKAZUu/POGen.git</connection>
+    <developerConnection>scm:git:https://github.com/exKAZUu/POGen.git</developerConnection>
+    <url>https://github.com/exKAZUu/POGen</url>
   </scm>
   <developers>
     <developer>
