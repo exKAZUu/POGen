@@ -18,6 +18,7 @@ public aspect OracleGeneratorAspect {
       Method method = ms.getMethod();
       Test test = method.getAnnotation(Test.class);
       if (test != null) {
+        OracleGenerator.instance.verifyAndSave(driver, method);
       }
     }
   }

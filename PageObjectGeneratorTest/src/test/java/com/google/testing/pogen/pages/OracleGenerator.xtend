@@ -37,7 +37,7 @@ class OracleGenerator {
 	var checkingOracles = false
 	var savingOracles = false
 
-	def enableCheckingOracles(File oracleFile) {
+	def enableChecking(File oracleFile) {
 		if (oracleFileForChecking == null || oracleFileForChecking.absolutePath != oracleFile.absolutePath) {
 			val mapper = new ObjectMapper()
 			expectedValueStore = mapper.readValue(oracleFile, new MapTypeReference())
@@ -46,11 +46,37 @@ class OracleGenerator {
 		checkingOracles = true
 	}
 
-	def disableCheckingOracles() {
+	def disableChecking() {
 		checkingOracles = false
 	}
 
-	def saveOracles() {
+	def enableSaving(File oracleFile) {
+		if (oracleFileForSaving == null || oracleFileForSaving.absolutePath != oracleFile.absolutePath) {
+			if (threadForSaving != null) {
+				save()
+			}
+			lastName = null
+			index = 0
+		}
+		oracleFileForSaving = oracleFile
+		savingOracles = true
+		if (threadForSaving == null) {
+			threadForSaving = new Thread([|save()])
+			Runtime.runtime.addShutdownHook(threadForSaving)
+		}
+	}
+
+	def enableSaving() {
+		val cal = Calendar.getInstance();
+		val sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
+		enableSaving(new File("oracles" + File.separatorChar + sdf.format(cal.time) + ".json"))
+	}
+
+	def disableSaving() {
+		savingOracles = false
+	}
+
+	private def save() {
 		val parentPath = oracleFileForSaving.parent
 		if (parentPath != null) {
 			new File(parentPath).mkdirs
@@ -61,33 +87,7 @@ class OracleGenerator {
 		}
 	}
 
-	def enableSavingOracles(File oracleFile) {
-		if (oracleFileForSaving == null || oracleFileForSaving.absolutePath != oracleFile.absolutePath) {
-			if (threadForSaving != null) {
-				saveOracles()
-			}
-			lastName = null
-			index = 0
-		}
-		oracleFileForSaving = oracleFile
-		savingOracles = true
-		if (threadForSaving == null) {
-			threadForSaving = new Thread([|saveOracles()])
-			Runtime.runtime.addShutdownHook(threadForSaving)
-		}
-	}
-
-	def enableSavingOracles() {
-		val cal = Calendar.getInstance();
-		val sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-		enableSavingOracles(new File("oracles" + File.separatorChar + sdf.format(cal.time) + ".json"))
-	}
-
-	def disableSavingOracles() {
-		savingOracles = false
-	}
-
-	def saveAndVerify(WebDriver driver, Class<?> testClass, String testCaseName) {
+	def verifyAndSave(WebDriver driver, Class<?> testClass, String testCaseName) {
 		val name = testClass.name + "/" + testCaseName
 		if (name != lastName) {
 			lastName = name
@@ -122,7 +122,7 @@ class OracleGenerator {
 		}
 	}
 
-	def saveAndVerify(WebDriver driver, Method method) {
-		saveAndVerify(driver, method.declaringClass, method.name)
+	def verifyAndSave(WebDriver driver, Method method) {
+		verifyAndSave(driver, method.declaringClass, method.name)
 	}
 }

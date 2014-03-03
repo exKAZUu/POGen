@@ -18,8 +18,8 @@ public class TestCase {
   @Before
   public void before() {
     driver = new FirefoxDriver();
-    OracleGenerator.instance.enableCheckingOracles(new File("oracles/2014-03-03_15-51-49.json"));
-    OracleGenerator.instance.enableSavingOracles();
+    OracleGenerator.instance.enableChecking(new File("oracles/2014-03-03_15-51-49.json"));
+    OracleGenerator.instance.enableSaving();
   }
 
   @After
@@ -38,6 +38,6 @@ public class TestCase {
     assertEquals("{$value3}", page.getTextOfValue3());
     assertEquals(1, page.getElementsOfValue4().size());
     assertEquals("{$value4}", page.getTextsOfValue4().get(0));
-    OracleGenerator.instance.saveAndVerify(driver, this.getClass(), "test");
+    OracleGenerator.instance.verifyAndSave(driver, this.getClass(), "test");
   }
 }
