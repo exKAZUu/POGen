@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import com.google.testing.pogen.pages.IndexPage;
+import com.google.testing.pogen.pages.OracleGenerator;
 
 public class TestCase {
   private FirefoxDriver driver;
@@ -17,11 +18,13 @@ public class TestCase {
   @Before
   public void before() {
     driver = new FirefoxDriver();
+    OracleGenerator.instance.enableCheckingOracles(new File("oracles/2014-03-03_15-51-49.json"));
+    OracleGenerator.instance.enableSavingOracles();
   }
 
   @After
   public void after() {
-    driver.close();
+    driver.quit();
   }
 
   @Test
@@ -35,5 +38,6 @@ public class TestCase {
     assertEquals("{$value3}", page.getTextOfValue3());
     assertEquals(1, page.getElementsOfValue4().size());
     assertEquals("{$value4}", page.getTextsOfValue4().get(0));
+    OracleGenerator.instance.saveAndVerify(driver, this.getClass(), "test");
   }
 }
