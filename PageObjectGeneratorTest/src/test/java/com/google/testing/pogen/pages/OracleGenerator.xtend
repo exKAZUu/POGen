@@ -2,6 +2,7 @@ package com.google.testing.pogen.pages
 
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.google.common.base.Objects
 import java.io.File
 import java.lang.reflect.Method
 import java.text.SimpleDateFormat
@@ -14,7 +15,6 @@ import org.openqa.selenium.WebDriver
 
 import static org.hamcrest.Matchers.*
 import static org.junit.Assert.*
-import com.google.common.base.Objects
 
 class MapTypeReference extends TypeReference<Map<String, List<Map<String, String>>>> {
 }
@@ -57,8 +57,8 @@ class OracleGenerator {
 			}
 			lastName = null
 			index = 0
+			oracleFileForSaving = oracleFile
 		}
-		oracleFileForSaving = oracleFile
 		savingOracles = true
 		if (threadForSaving == null) {
 			threadForSaving = new Thread([|save()])
