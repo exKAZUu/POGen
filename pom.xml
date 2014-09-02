@@ -111,7 +111,7 @@
       <artifactId>org.eclipse.xtend.lib</artifactId>
       <version>${xtend.version}</version>
     </dependency>
-    <!-- for test -->
+    <!-- Test dependencies -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
